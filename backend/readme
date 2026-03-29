@@ -1,0 +1,297 @@
+# Feature Usage Analytics System - Integration Documentation
+
+## Overview
+
+This analytics system tracks user interactions and feature usage across web applications. The SMART_DELIVERY_SYSTEM (drone project) has been successfully integrated to capture real-time analytics data.
+
+---
+
+## Integration Steps Completed
+
+### 1. **SDK Implementation in SMART_DELIVERY_SYSTEM**
+
+#### Location: `SMART_DELIVERY_SYSTEM/app/templates/base.html`
+
+The analytics SDK was loaded and initialized in the base template to automatically track user interactions:
+
+```html
+<!-- Analytics SDK -->
+<script src="http://127.0.0.1:4000/sdk-tracker.js"></script>
+<script>
+  window.AnalyticsSDK.init({
+    appId: "drone-app",
+    endpoint: "http://127.0.0.1:4000"
+  });
+</script>
+```
+
+**What this does:**
+- Loads the SDK from the analytics backend
+- Initializes tracking with app ID: `drone-app`
+- Sets the backend endpoint to `http://127.0.0.1:4000`
+- Automatically tracks page views and user interactions
+
+---
+
+### 2. **Backend Event Field Mapping**
+
+#### Location: `analytics-system/backend/server.js` (POST `/api/events`)
+
+Updated the backend to properly map SDK event data to the database schema:
+
+```javascript
+const event = new Analytics({
+  appId: data.appId || "drone-app",           // App identifier
+  event: data.eventType || "unknown",         // Event type (feature_used, etc.)
+  feature: data.featureName || "unknown",     // Feature name
+  user_id: data.userId || "anonymous",        // User identifier
+  details: {
+    sessionId: data.sessionId,                // Session tracking
+    pageName: data.pageName,                  // Current page
+    metadata: data.metadata                   // Additional data
+  },
+  timeSpent: data.timeSpent || 0             // Time on page
+});
+
+await event.save();
+```
+
+**Key Changes:**
+- Maps `eventType` from SDK to `event` field in database
+- Maps `featureName` to `feature` field
+- Stores `sessionId` and `pageName` in details object
+- Handles missing fields with defaults
+
+---
+
+### 3. **Dashboard Data Fetching**
+
+#### Location: `analytics-system/dashboard/src/App.jsx`
+
+Updated the dashboard to fetch insights with the correct app ID:
+
+```javascript
+const BACKEND_ENDPOINT = import.meta.env.VITE_BACKEND_ENDPOINT || "http://127.0.0.1:4000";
+const APP_ID = import.meta.env.VITE_APP_ID || "drone-app";
+
+// Fetch analytics insights
+const res = await fetch(`${BACKEND_ENDPOINT}/api/insights?appId=${APP_ID}`);
+```
+
+**Configuration:**
+- Backend URL: `http://127.0.0.1:4000`
+- App ID: `drone-app`
+
+---
+
+### 4. **App ID Standardization**
+
+Changed all references from `"demo-app"` to `"drone-app"` for consistent branding:
+
+**Files Updated:**
+1. ✅ `SMART_DELIVERY_SYSTEM/app/templates/base.html` - SDK initialization
+2. ✅ `analytics-system/backend/server.js` - Event creation and DEFAULT_APP_ID
+3. ✅ `analytics-system/backend/server.js` - Event fallback in handler
+4. ✅ `analytics-system/dashboard/.env` - VITE_APP_ID
+5. ✅ `analytics-system/dashboard/.env.example` - Example configuration
+6. ✅ `analytics-system/dashboard/src/App.jsx` - Fallback APP_ID
+7. ✅ `analytics-system/dashboard/dist/` - Rebuilt with new config
+
+---
+
+## Data Flow Architecture
+
+```
+SMART_DELIVERY_SYSTEM
+    ↓
+   SDK (sdk-tracker.js)
+    ↓
+POST /api/events → Analytics Backend (server.js)
+    ↓
+MongoDB Atlas (analytics_db)
+    ↓
+GET /api/insights → Analytics Dashboard
+    ↓
+React Dashboard (App.jsx) displays insights
+```
+
+---
+
+## Event Tracking Features
+
+### Auto-Tracked Events:
+- **Page Views** - Every page load
+- **Feature Usage** - Data-track attributes on elements
+- **Page Time** - Time spent on each page before leaving
+- **Click Tracking** - Automatic click event capture
+
+### Automatic Session Tracking:
+- Unique `sessionId` generated on page load
+- `userId` randomly generated per session
+- Session duration calculated on page exit
+
+---
+
+## Analytics Endpoints
+
+### **POST /api/events**
+Receives event data from SDK
+```json
+{
+  "appId": "drone-app",
+  "eventType": "feature_used",
+  "featureName": "book_delivery",
+  "userId": "user_123",
+  "sessionId": "sess_abc123",
+  "pageName": "/checkout",
+  "timeSpent": 45000,
+  "metadata": {}
+}
+```
+
+### **GET /api/insights?appId=drone-app**
+Returns analytics summary:
+- Total events, sessions, users
+- Most/least used features
+- Time spent per page
+- Daily event trends
+- Recent session details
+
+---
+
+## Environment Configuration
+
+### Backend (.env)
+```
+MONGO_URI=mongodb+srv://[username]:[password]@[cluster].mongodb.net/analytics_db
+PORT=4000
+```
+
+### Dashboard (.env)
+```
+VITE_BACKEND_ENDPOINT=http://127.0.0.1:4000
+VITE_APP_ID=drone-app
+```
+
+---
+
+## Startup Instructions
+
+### 1. **Start Analytics Backend**
+```bash
+cd analytics-system/backend
+npm install
+npm start
+# Server runs on http://127.0.0.1:4000
+```
+
+### 2. **Start Dashboard (Development)**
+```bash
+cd analytics-system/dashboard
+npm install
+npm run dev
+# Dashboard runs on http://localhost:5173
+```
+
+### 3. **Start SMART_DELIVERY_SYSTEM**
+```bash
+cd SMART_DELIVERY_SYSTEM-main
+python run.py
+# App runs on http://127.0.0.1:5000
+```
+
+---
+
+## Troubleshooting
+
+### MongoDB Connection Error
+**Problem:** `MongooseServerSelectionError: Could not connect to any servers`
+
+**Solution:**
+1. Go to [MongoDB Atlas](https://cloud.mongodb.com)
+2. Network Access → Add your IP: `47.15.119.24`
+3. Wait 1-5 minutes for whitelist update
+4. Restart backend
+
+### No Analytics Showing
+**Checklist:**
+- ✅ Both backend and dashboard servers running
+- ✅ SMART_DELIVERY_SYSTEM loaded the SDK
+- ✅ SDK endpoint matches backend URL
+- ✅ App ID matches across all services (drone-app)
+- ✅ MongoDB connection is active
+
+### Dashboard Shows Old Data
+- Rebuild dashboard: `npm run build`
+- Check browser cache (Ctrl+Shift+Delete)
+- Verify `.env` has correct `VITE_APP_ID=drone-app`
+
+---
+
+## Key Technical Details
+
+### SDK Integration Points:
+- **Load Location:** `base.html` before closing `</body>`
+- **Requires:** `sdk-tracker.js` served from backend
+- **Auto-Tracking:** Enabled by default
+- **Session ID:** Stored in `sessionStorage`
+
+### Backend Processing:
+- **Event Validation:** Fields validated with defaults
+- **Database Model:** Analytics schema with appId indexing
+- **Data Retention:** Stored in MongoDB Atlas
+- **Insights Generation:** Calculated from raw event data
+
+### Dashboard Features:
+- **Real-time Updates:** Fetches latest insights on load
+- **Feature Analytics:** Usage breakdown by feature
+- **Session Tracking:** Recent user sessions
+- **Time Analysis:** Time spent per page
+- **AI Insights:** Generated from event patterns (requires Gemini API)
+
+---
+
+## MongoDB Schema
+
+The Analytics collection stores:
+```javascript
+{
+  appId: String,              // "drone-app"
+  event: String,              // "feature_used"
+  feature: String,            // Feature name
+  user_id: String,            // User identifier
+  details: {
+    sessionId: String,
+    pageName: String,
+    metadata: Object
+  },
+  timeSpent: Number,          // Milliseconds
+  createdAt: Date             // Auto-generated
+}
+```
+
+---
+
+## Performance Notes
+
+- Events are batched and sent to backend
+- SDK is lightweight (~2KB minified)
+- No blocking of page interactions
+- Async tracking prevents UI jank
+- MongoDB indexes on appId for fast queries
+
+---
+
+## Future Enhancements
+
+- [ ] Custom event properties
+- [ ] User authentication integration
+- [ ] Advanced segmentation
+- [ ] Export analytics to CSV
+- [ ] Webhooks for real-time alerts
+- [ ] Multi-app dashboard
+
+---
+
+**Last Updated:** March 24, 2026
+**Integration Status:** ✅ Complete and Tested
