@@ -3,7 +3,7 @@
 Self-hosted mini Google Analytics for web apps:
 - Vanilla JS tracking SDK (`sdk/tracker.js`) via a single `<script>` tag
 - Node.js + Express API that stores events in MongoDB
-- React (Vite) dashboard with premium charts + Gemini-based AI insights
+- React (Vite) dashboard with premium charts + Gemini-based AI insights 
 
 ---
 
