@@ -291,7 +291,13 @@ This project is licensed under the MIT License.
 
 **Hitesh Kumar**
 
-GitHub: https://github.com/hiteshkr25
+**Anjali Sinha**
+
+**Rahul Raj**
+
+**Vasu Singh**
+
+
 
 ---
 
