@@ -292,22 +292,7 @@ AnalyticsSDK.trackEvent({
 
 # 👨‍💻 Team Contributions
 
-### Member 1 – Frontend Dashboard Development
-
-- Dashboard UI
-- KPI Cards
-- Charts
-- Responsive Design
-- API Integration
-
-### Member 2 – Event Tracking System
-
-- Tracking SDK
-- Event Capture
-- Session Tracking
-- Fetch API Integration
-
-### Member 3 – Backend Development
+### Hitesh Kumar – Backend Development
 
 - Express Server
 - REST APIs
@@ -315,7 +300,22 @@ AnalyticsSDK.trackEvent({
 - Request Validation
 - Server Architecture
 
-### Member 4 – Database & Analytics
+### Vasu Singh – Frontend Dashboard Development
+
+- Dashboard UI
+- KPI Cards
+- Charts
+- Responsive Design
+- API Integration
+
+### Anjali Sinha – Event Tracking System
+
+- Tracking SDK
+- Event Capture
+- Session Tracking
+- Fetch API Integration
+
+### Rahul Raj – Database & Analytics
 
 - MongoDB Schema
 - Data Storage
