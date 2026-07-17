@@ -1,107 +1,76 @@
-# 🚀 Feature Usage & Engagement Analytics Platform
+# 📊 Feature Usage & Engagement Analytics System
 
-<p align="center">
+A full-stack web analytics platform that captures user interactions, stores engagement data, processes analytics, and visualizes actionable insights through an interactive dashboard.
 
-![Node.js](https://img.shields.io/badge/Node.js-18+-green)
-![React](https://img.shields.io/badge/React-19-61DAFB)
-![Express](https://img.shields.io/badge/Express.js-Backend-lightgrey)
-![MongoDB](https://img.shields.io/badge/MongoDB-Database-success)
-![TailwindCSS](https://img.shields.io/badge/TailwindCSS-UI-38BDF8)
-![License](https://img.shields.io/badge/License-MIT-yellow)
-
-</p>
-
-> A production-inspired feature analytics platform that enables developers to track user interactions, monitor feature adoption, analyze engagement metrics, and visualize insights through an interactive dashboard powered by AI-generated insights.
+The system enables developers to understand user behavior by tracking feature usage, sessions, page engagement, and overall application activity.
 
 ---
 
-# 📖 Overview
+## 🚀 Features
 
-Feature Usage & Engagement Analytics Platform is a lightweight, self-hosted analytics solution designed for modern web applications.
-
-It provides a JavaScript SDK to capture user interactions, stores events securely, and presents actionable insights through a responsive analytics dashboard.
-
-The platform helps developers understand:
-
-- Feature adoption
-- User engagement
-- Session activity
-- User behaviour
-- Product usage trends
-- AI-generated recommendations
-
----
-
-# ✨ Features
-
-- 📊 Feature Usage Tracking
-- 👥 User Session Analytics
-- 🖱 Automatic Click Tracking
+- 📌 Automatic Event Tracking
+- 👤 User & Session Tracking
 - 📈 Interactive Analytics Dashboard
-- 🤖 AI-powered Insights
-- 📅 Historical Trend Analysis
-- ⚡ Lightweight JavaScript SDK
-- 🔐 Self-hosted Architecture
-- 📦 REST API Backend
-- 📱 Responsive Dashboard
+- 📊 KPI Metrics
+  - Total Events
+  - Total Sessions
+  - Total Users
+  - Average Session Duration
+- 📉 Daily Event Trend Analysis
+- 🧩 Feature Usage Analytics
+- ⏱ Session Analytics
+- 📱 Responsive Dashboard UI
+- 🔄 Real-time Dashboard Refresh
+- 🌐 REST API Architecture
 
 ---
 
-# 🏗 Architecture
+# 🏗 Project Architecture
 
-```text
-                +----------------------+
-                |   Web Application    |
-                +----------+-----------+
-                           |
-                     tracker.js SDK
-                           |
-                           ▼
-                 Express REST API Server
-                           |
-                           ▼
-                     MongoDB Database
-                           |
-                           ▼
-              React Analytics Dashboard
-                           |
-                           ▼
-                AI Insights (Gemini API)
 ```
-
----
-
-# ⚙️ Tech Stack
-
-| Layer | Technology |
-|--------|------------|
-| Frontend | React, Vite, Tailwind CSS |
-| Backend | Node.js, Express.js |
-| Database | MongoDB |
-| Charts | Recharts |
-| AI | Google Gemini API |
-| SDK | Vanilla JavaScript |
-| API | REST API |
+                    User Interaction
+                           │
+                           ▼
+               JavaScript Tracking SDK
+                           │
+                    HTTP POST Requests
+                           │
+                           ▼
+                Node.js + Express Server
+                           │
+                    Request Validation
+                           │
+                           ▼
+                      MongoDB Database
+                           │
+                 Analytics Computation
+                           │
+                           ▼
+                 REST Analytics APIs
+                           │
+                           ▼
+                React Analytics Dashboard
+```
 
 ---
 
 # 📂 Project Structure
 
-```text
-Feature-Usage-and-Engagement-Analytics/
+```
+analytics-system/
 
 ├── backend/
-│   ├── controllers/
-│   ├── middleware/
 │   ├── models/
 │   ├── routes/
-│   └── server.js
+│   ├── server.js
+│   └── package.json
 │
 ├── dashboard/
 │   ├── src/
-│   ├── components/
-│   ├── pages/
-│   └── assets/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── App.jsx
+│   │   └── main.jsx
 │
 ├── sdk/
 │   └── tracker.js
@@ -114,14 +83,124 @@ Feature-Usage-and-Engagement-Analytics/
 
 ---
 
-# 🚀 Getting Started
+# ⚙ Tech Stack
+
+## Frontend
+
+- React.js
+- JavaScript (ES6+)
+- Tailwind CSS
+- Recharts / Chart Library
+- Fetch API
+
+---
+
+## Backend
+
+- Node.js
+- Express.js
+- REST APIs
+- Middleware
+- CORS
+- Morgan
+
+---
+
+## Database
+
+- MongoDB
+- Mongoose ODM
+
+---
+
+## Development Tools
+
+- Git & GitHub
+- Postman
+- Nodemon
+- VS Code
+
+---
+
+# 📊 Dashboard Modules
+
+### Overview
+
+- Total Events
+- Total Sessions
+- Total Users
+- Average Session Duration
+
+### Feature Analytics
+
+- Most Used Feature
+- Least Used Feature
+- Feature Usage Distribution
+
+### Session Analytics
+
+- Session Duration
+- User Activity
+- Pages Visited
+- Session Statistics
+
+---
+
+# 🔄 System Workflow
+
+1. User performs an action.
+2. Tracking SDK captures the interaction.
+3. Event is sent to the backend using REST APIs.
+4. Backend validates the request.
+5. Event is stored in MongoDB.
+6. Analytics APIs process the stored data.
+7. Dashboard fetches processed analytics.
+8. KPIs and charts are rendered for visualization.
+
+---
+
+# 📌 REST API Endpoints
+
+## Event APIs
+
+| Method | Endpoint | Description |
+|---------|----------|-------------|
+| POST | `/api/events` | Store tracking events |
+| DELETE | `/api/events` | Clear analytics data |
+
+---
+
+## Analytics APIs
+
+| Method | Endpoint | Description |
+|---------|----------|-------------|
+| GET | `/api/insights` | Fetch dashboard analytics |
+| GET | `/api/health` | Backend health check |
+
+---
+
+# 📈 KPIs Calculated
+
+- Total Events
+- Total Sessions
+- Total Users
+- Average Session Duration
+- Daily Event Trend
+- Feature Usage Breakdown
+- Most Used Feature
+- Least Used Feature
+- Session Statistics
+
+---
+
+# 🚀 Installation
 
 ## Clone Repository
 
 ```bash
-git clone https://github.com/hiteshkr25/Feature-Usage-and-Engagement-Analytics.git
+git clone https://github.com/your-username/feature-usage-analytics.git
 
-cd Feature-Usage-and-Engagement-Analytics
+cd feature-usage-analytics
 ```
 
 ---
@@ -132,8 +211,20 @@ cd Feature-Usage-and-Engagement-Analytics
 cd backend
 
 npm install
+```
 
-npm run dev
+Create a `.env` file:
+
+```env
+PORT=4001
+
+MONGO_URI=your_mongodb_connection_string
+```
+
+Run backend:
+
+```bash
+npm start
 ```
 
 ---
@@ -150,155 +241,109 @@ npm run dev
 
 ---
 
-## Environment Variables
+# 📡 Event Tracking Example
 
-Create a `.env` file inside the backend directory.
+```javascript
+AnalyticsSDK.init({
+    appId: "drone-app",
+    endpoint: "http://localhost:4001"
+});
 
-```env
-PORT=5000
-
-MONGODB_URI=your_mongodb_connection_string
-
-GEMINI_API_KEY=your_api_key
+AnalyticsSDK.trackEvent({
+    eventType: "feature_used",
+    featureName: "track_order"
+});
 ```
 
 ---
 
-# 📈 Dashboard Features
+# 📊 Sample Analytics Response
 
-### Analytics
-
-- Daily Active Users
-- Feature Usage Metrics
-- Event Tracking
-- User Sessions
-- User Activity Timeline
-- Engagement Trends
-
-### AI Insights
-
-- Product Usage Summary
-- Feature Recommendations
-- Engagement Suggestions
-- Behaviour Analysis
-
----
-
-# 🔄 Event Flow
-
-```text
-User Interaction
-
-        │
-
-        ▼
-
-JavaScript SDK
-
-        │
-
-        ▼
-
-REST API
-
-        │
-
-        ▼
-
-MongoDB
-
-        │
-
-        ▼
-
-Analytics Dashboard
-
-        │
-
-        ▼
-
-AI Insights
+```json
+{
+  "totals": {
+    "totalEvents": 150,
+    "totalUsers": 24,
+    "totalSessions": 42,
+    "avgSessionDurationSeconds": 185
+  },
+  "mostUsedFeature": {
+    "name": "Track Order",
+    "count": 68
+  }
+}
 ```
 
 ---
 
-# 📸 Screenshots
+# 🎯 Key Learning Outcomes
 
-> Add screenshots here after deployment.
-
-```
-Dashboard
-
-Feature Usage
-
-User Sessions
-
-AI Insights
-```
+- Full Stack Web Development
+- REST API Development
+- Event Tracking Systems
+- MongoDB Data Modeling
+- Analytics Dashboard Development
+- Data Aggregation
+- Client-Server Architecture
+- Session Management
+- Responsive UI Development
 
 ---
 
-# 🛣 Roadmap
+# 👨‍💻 Team Contributions
 
-- ✅ Event Tracking SDK
-- ✅ Analytics Dashboard
-- ✅ Session Tracking
-- ✅ AI Insights
-- ✅ MongoDB Integration
-- ⏳ Authentication
-- ⏳ Team Workspaces
-- ⏳ Event Export
-- ⏳ Heatmaps
-- ⏳ Real-time Streaming
+### Member 1 – Frontend Dashboard Development
 
----
+- Dashboard UI
+- KPI Cards
+- Charts
+- Responsive Design
+- API Integration
 
-# 🤝 Contributing
+### Member 2 – Event Tracking System
 
-Contributions are welcome.
+- Tracking SDK
+- Event Capture
+- Session Tracking
+- Fetch API Integration
 
-1. Fork the repository
+### Member 3 – Backend Development
 
-2. Create a feature branch
+- Express Server
+- REST APIs
+- Event Processing
+- Request Validation
+- Server Architecture
 
-```bash
-git checkout -b feature/my-feature
-```
+### Member 4 – Database & Analytics
 
-3. Commit changes
-
-```bash
-git commit -m "feat: add new feature"
-```
-
-4. Push
-
-```bash
-git push origin feature/my-feature
-```
-
-5. Open a Pull Request
+- MongoDB Schema
+- Data Storage
+- Aggregation Pipelines
+- KPI Computation
+- Analytics APIs
 
 ---
 
-# 📜 License
+# 🌟 Future Enhancements
 
-This project is licensed under the MIT License.
-
----
-
-# 👨‍💻 Authors
-
-**Hitesh Kumar**
-
-**Anjali Sinha**
-
-**Rahul Raj**
-
-**Vasu Singh**
-
-
+- AI-powered Insights
+- Real-time Analytics using WebSockets
+- User Authentication
+- Export Reports (PDF/Excel)
+- Funnel Analysis
+- Retention Analytics
+- Heatmaps
+- Role-based Access Control
+- Cloud Deployment
+- Docker Support
 
 ---
 
-⭐ If you found this project useful, consider giving it a star!
+# 📄 License
+
+This project was developed for academic and educational purposes.
+
+---
+
+## ⭐ If you found this project useful, consider giving it a star!
